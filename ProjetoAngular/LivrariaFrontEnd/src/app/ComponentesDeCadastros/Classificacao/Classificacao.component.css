@@ -1,0 +1,15 @@
+.table{
+    --bs-table-accent-bg: #111;
+
+}
+tr{
+    background-color: #fff;
+    color: goldenrod;
+}
+
+
+
+.modal-content{
+    background-color: #000;
+}
+

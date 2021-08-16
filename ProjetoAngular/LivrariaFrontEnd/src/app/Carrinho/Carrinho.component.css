@@ -1,0 +1,14 @@
+.container{
+  border-radius: 1px;
+  border: 5px solid goldenrod;
+}
+
+tr{
+  background-color: #fff;
+  color: goldenrod;
+}
+
+.table{
+  --bs-table-accent-bg: #111;
+
+}

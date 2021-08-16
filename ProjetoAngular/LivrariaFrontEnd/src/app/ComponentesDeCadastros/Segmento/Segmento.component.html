@@ -1,0 +1,132 @@
+<div class="container animate__animated animate__backInUp">
+  <div class="row">
+
+  <div class="table-responsive">
+    <div>
+        <app-titulo [titulo]="titulo"></app-titulo>
+        <div class="d-flex">
+          <div class="form-inline mr-auto">
+            <div class="form-group mb-2">
+              <i class="fas fa-arrow-circle-left fa-2x me-2" tooltip="Voltar" style="color: goldenrod; cursor: pointer;" routerLink="/menuDeCadastros"></i>
+              <button class="btn btn-sm btn-outline-secondary mb-3" style="color:goldenrod" (click)="novoSegmento(template)">Cadastrar novo segmento</button>
+              <input type="text"
+              class="form-control mr-2"
+              placeholder="Buscar Segmento"
+              [(ngModel)]="filtroLista">
+            </div>
+          </div>
+        </div>
+
+
+
+        <table class="table table-striped " style="border:5px solid goldenrod;">
+            <caption style="color: goldenrod;">Lista de Segmentos</caption>
+            <thead class="table-light" style="text-align: left;">
+              <tr>
+                <th class="text-center" scope="col">Opções</th>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+              </tr>
+            </thead>
+            <tbody style="text-align: left;">
+              <tr *ngFor="let segmento of segmentosFiltrados" >
+                <th class="text-center" scope="row">
+                  <div class="btn-group">
+                  <button class="btn btn-sm" style="color:goldenrod;" (click)="segmentoSelect(segmento, template)" tooltip="Alterar" > <i class="fa fa-edit fa-lg"  ></i></button>
+                  <button class="btn btn-sm" style="color: red;"   (click)="excluirSegmento(segmento,confirm)" tooltip="Excluir"> <i class="fa fa-trash fa-lg" aria-hidden="true"></i></button>
+                  </div>
+                </th>
+                <td>{{segmento.id}}</td>
+                <td>{{segmento.descricao}}</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<ng-template #template>
+  <div class="modal-content" style="background-color: #111;">
+  <div class="modal-header animate__animated animate__backInLeft" >
+
+    <div *ngIf="segmentoSelecionado.id !== 0" class="col-10">
+
+      <app-titulo [titulo]="(segmentoSelecionado.id === -1 ? 'Novo Segmento' : 'Código: ' + segmentoSelecionado.id)">
+
+      </app-titulo>
+
+    </div>
+
+  </div>
+  <div class="modal-body animate__animated animate__backInLeft" >
+
+    <div class="row">
+
+
+
+      <div class="animate__animated animate__backInLeft">
+      <form [formGroup]="segmentoForm" (submit)="segmentoSubmit()" >
+        <div class="form-group">
+          <label style="color:goldenrod">Nome do segmento:</label>
+          <input type="text" class="form-control" formControlName="descricao"
+          [ngClass]="cssValidator(f.descricao)">
+          <div *ngIf="f.descricao.errors?.required && f.descricao.touched" class="invalid-feedback">
+            Segmento é obrigatório.
+          </div>
+        </div>
+
+        <br>
+
+        <div class="form-group">
+          <button class="btn btn-outline-dark me-2" style="color: goldenrod;" [disabled]="!segmentoForm.valid">Salvar</button>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+  </div>
+  <div class="modal-footer animate__animated animate__backInLeft" >
+    <button style="color: goldenrod;" type="button" class="btn btn-outline-dark  pull-right" aria-label="Close" (click)="modalRef.hide()">
+      Fechar
+    </button>
+  </div>
+</div>
+</ng-template>
+
+
+
+
+
+<ng-template #confirm class="modal fade cor"  tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  		<div class="modal-content" style="background-color: #111;">
+    		<div class="modal-header animate__animated animate__backInLeft" >
+      			<h4 class="modal-title" style="color: goldenrod;">
+        			Deletando Segmento
+      			</h4>
+    		</div>
+    		<div class="modal-body animate__animated animate__backInLeft" style="color: goldenrod">
+            <p><strong>{{bodyDeletarMensagem}}</strong></p>
+      			<p>{{bodyDeletarSegmento}}</p>
+            <p>{{bodyDeletarCodigo}}</p>
+    		</div>
+    		<div class="modal-footer animate__animated animate__backInLeft btn-group d-flex">
+      			<button type="button" class="btn btn-outline-dark" style="color: goldenrod;" (click)="modalRef.hide()">
+        			CENCELAR
+      			</button>
+      			<button type="button" class="btn btn-outline-danger" (click)="confirmDeleteSegmento(segmento)">
+          		DELETAR
+        		</button>
+    		</div>
+  		</div>
+  </ng-template>
+
+
+
+
+

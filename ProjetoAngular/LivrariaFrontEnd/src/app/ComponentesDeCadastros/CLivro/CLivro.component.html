@@ -1,0 +1,276 @@
+<div class="container animate__animated animate__backInUp">
+  <div class="row">
+
+  <div class="table-responsive">
+    <div>
+        <app-titulo [titulo]="titulo"></app-titulo>
+        <div class="d-flex">
+          <div class="form-inline mr-auto">
+            <div class="form-group mb-2">
+              <i class="fas fa-arrow-circle-left fa-2x me-2" tooltip="Voltar" style="color: goldenrod; cursor: pointer;" routerLink="/menuDeCadastros"></i>
+              <button class="btn btn-sm btn-outline-secondary mb-3" style="color:goldenrod" (click)="novoLivro(template)">Cadastrar novo livro</button>
+              <input type="text"
+              class="form-control mr-2"
+              placeholder="Buscar Livro"
+              [(ngModel)]="filtroLista">
+            </div>
+          </div>
+        </div>
+
+
+
+        <table class="table table-striped" style="border:5px solid goldenrod;">
+            <caption style="color: goldenrod;">Lista de Livros</caption>
+            <thead class="table-light" style="text-align: center;">
+              <tr>
+                <th class="d-none d-md-table-cell">
+                  <button type="button" class="btn btn-outline-light btn-sm"
+                  (click)="alterarImagem()">
+                  <i class="{{!exibirImagem ? 'fa fa-eye' : 'fa fa-eye-slash'}}"></i>
+                  {{!exibirImagem ? 'exibir' : 'ocultar'}}
+                  </button>
+                </th>
+                <th class="text-center" scope="col">Opções</th>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Edição</th>
+                <th scope="col">Páginas</th>
+                <th scope="col">Tipo de Capa</th>
+                <th scope="col">Data de Publicação</th>
+                <th scope="col">Segmento</th>
+                <th scope="col">Editora</th>
+                <th scope="col">Autor</th>
+                <th scope="col">Classificação</th>
+                <th scope="col">Gênero</th>
+              </tr>
+            </thead>
+            <tbody style="text-align: center;" >
+              <tr *ngFor="let livro of livrosFiltrados" >
+                <td class="d-none d-md-table-cell">
+                  <img *ngIf="exibirImagem"
+                  src="/assets/img/{{livro.imagemURL}}"
+                  [style.width.px]="larguraImagem"
+                  [style.margin.px]="margemImagem"
+                  >
+                </td>
+                <th class="text-center"  scope="row">
+                  <div class="btn-group">
+                  <button class="btn btn-sm" style="color:goldenrod;" (click)="livroSelect(livro, template)" tooltip="Alterar" > <i class="fa fa-edit fa-lg"  ></i></button>
+                  <button class="btn btn-sm" style="color: red;"   (click)="excluirLivro(livro,confirm)" tooltip="Excluir"> <i class="fa fa-trash fa-lg" aria-hidden="true"></i></button>
+                  </div>
+                </th>
+                <td>{{livro.id}}</td>
+                <td>{{livro.nome}}</td>
+                <td style="text-align: center;">{{livro.edicao}}</td>
+                <td>{{livro.pagina}}</td>
+                <td>{{livro.tipoCapa}}</td>
+                <td>{{livro.dataPublicacao | DateFormatPipe}}</td>
+                <td>{{livro.segmento.descricao}}</td>
+                <td>{{livro.marca.descricao}}</td>
+                <td>{{livro.autor.nome}}</td>
+                <td>{{livro.classificacao.descricao}}</td>
+                <td>{{livro.genero.descricao}}</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<ng-template #template>
+  <div class="modal-content" style="background-color: #111;">
+  <div class="modal-header animate__animated animate__backInLeft" >
+
+    <div *ngIf="livroSelecionado.id !== 0" class="col-10">
+
+      <app-titulo [titulo]="(livroSelecionado.id === -1 ? 'Novo Livro' : 'Código: ' + livroSelecionado.id)">
+
+      </app-titulo>
+
+    </div>
+
+  </div>
+  <div class="modal-body animate__animated animate__backInLeft" >
+
+    <div class="row">
+
+
+
+      <div class="animate__animated animate__backInLeft">
+      <form [formGroup]="livroForm" (submit)="livroSubmit()" >
+
+        <div class="row">
+          <div class="form-group col-md-12">
+            <label>Nome</label>
+            <input type="text" class="form-control" formControlName="nome"
+            [ngClass]="cssValidator(f.nome)">
+            <div *ngIf="f.nome.errors?.required"
+              class="invalid-feedback">
+              Nome é obrigatório.
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-3">
+            <label>Edição</label>
+            <input type="text" class="form-control" formControlName="edicao"
+            [ngClass]="cssValidator(f.edicao)">
+            <div *ngIf="f.edicao.errors?.required"
+              class="invalid-feedback">
+              Edição é obrigatório.
+            </div>
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Páginas</label>
+            <input type="text" class="form-control" formControlName="pagina"
+            [ngClass]="cssValidator(f.pagina)">
+            <div *ngIf="f.pagina.errors?.required"
+              class="invalid-feedback">
+              Página é obrigatório.
+            </div>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label>Tipo de Capa</label>
+            <input type="text" class="form-control" formControlName="tipoCapa"
+            [ngClass]="cssValidator(f.tipoCapa)">
+            <div *ngIf="f.tipoCapa.errors?.required"
+              class="invalid-feedback">
+              Tipo de Capa é obrigatório.
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label>Gênero</label>
+            <select class="form-control" formControlName="generoId" [ngClass]="cssValidator(f.generoId)">
+              <option *ngFor="let genero of generos" [value]="genero.id">
+                {{genero.descricao}}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label>Segmento</label>
+            <select class="form-control" formControlName="segmentoId" [ngClass]="cssValidator(f.segmentoId)">
+              <option *ngFor="let segmento of segmentos" [value]="segmento.id">
+                {{segmento.descricao}}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label>Editora</label>
+            <select class="form-control" formControlName="marcaId" [ngClass]="cssValidator(f.marcaId)">
+              <option *ngFor="let marca of marcas" [value]="marca.id">
+                {{marca.descricao}}
+              </option>
+            </select>
+          </div>
+        </div>
+
+
+
+        <div class="row">
+          <div class="form-group">
+            <label>Autor</label>
+            <select class="form-control" formControlName="autorId" [ngClass]="cssValidator(f.autorId)">
+              <option *ngFor="let autor of autores" [value]="autor.id">
+                {{autor.nome}}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label>Classificação</label>
+          <select class="form-control" formControlName="classificacaoId" [ngClass]="cssValidator(f.classificacaoId)">
+              <option *ngFor="let classificacao of classificacoes" [value]="classificacao.id">
+                {{classificacao.descricao}}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label>Data de Publicação</label>
+            <input type="datetime" class="form-control" formControlName="dataPublicacao" [ngClass]="cssValidator(f.dataPublicacao)">
+            <div *ngIf="f.dataPublicacao.errors?.required"
+              class="invalid-feedback">
+              Data de Publicação é obrigatório.
+            </div>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label>Imagem</label>
+            <input type="text" class="form-control" formControlName="imagemURL"
+            [ngClass]="cssValidator(f.imagemURL)">
+            <div *ngIf="f.imagemURL.errors?.required"
+              class="invalid-feedback">
+              Imagem é obrigatório.
+            </div>
+          </div>
+        </div>
+
+
+        <br>
+
+        <div class="form-group">
+          <button class="btn btn-outline-dark me-2" style="color: goldenrod;" [disabled]="!livroForm.valid">Salvar</button>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+  </div>
+  <div class="modal-footer animate__animated animate__backInLeft" >
+    <button style="color: goldenrod;" type="button" class="btn btn-outline-dark  pull-right" aria-label="Close" (click)="modalRef.hide()">
+      Fechar
+    </button>
+  </div>
+</div>
+</ng-template>
+
+
+
+
+
+<ng-template #confirm class="modal fade cor"  tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  		<div class="modal-content" style="background-color: #111;">
+    		<div class="modal-header animate__animated animate__backInLeft" >
+      			<h4 class="modal-title" style="color: goldenrod;">
+        			Deletando Livro
+      			</h4>
+    		</div>
+    		<div class="modal-body animate__animated animate__backInLeft" style="color: goldenrod">
+            <p><strong>{{bodyDeletarMensagem}}</strong></p>
+      			<p>{{bodyDeletarLivro}}</p>
+            <p>{{bodyDeletarCodigo}}</p>
+    		</div>
+    		<div class="modal-footer animate__animated animate__backInLeft btn-group d-flex">
+      			<button type="button" class="btn btn-outline-dark" style="color: goldenrod;" (click)="modalRef.hide()">
+        			CENCELAR
+      			</button>
+      			<button type="button" class="btn btn-outline-danger" (click)="confirmDeleteLivro(livro)">
+          		DELETAR
+        		</button>
+    		</div>
+  		</div>
+  </ng-template>
+
+
+
+
+

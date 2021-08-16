@@ -1,0 +1,158 @@
+<hr class="animate__animated animate__backInLeft">
+
+<h1 class="title animate__animated animate__zoomIn">Livros Recomendados</h1>
+<br><br>
+
+<div >
+  <div class="container animate__animated animate__zoomIn  legal col mb-2" >
+  <div *ngFor="let livro of livrosFiltrados" class="row align-content-center row-cols-lg-3 row-cols-md-3 g-4">
+    <div class="col mb-3">
+      <div class="UmaBorda">
+        <img src="/assets/img/{{livro.imagemURL}}" class="card-img-top img-fluid img-thumbnail" alt="" type="button" (click)="livroSelect(livro, template)">
+        <button type="button" class="btn btn-outline-dark img-fluid" style="width: 16rem" (click)="livroSelect(livro, template)">Detalhes</button>
+        <button type="button" class="btn btn-outline-dark img-fluid" style="width: 16rem">Comprar</button>
+      </div>
+    </div>
+    <div class="col mb-3">
+      <div class="UmaBorda">
+        <img src="/assets/img/{{livro.imagemURL}}" class="card-img-top img-fluid img-thumbnail" alt="" type="button" (click)="livroSelect(livro, template)">
+        <button type="button" class="btn btn-outline-dark img-fluid" style="width: 16rem" (click)="livroSelect(livro, template)">Detalhes</button>
+        <button type="button" class="btn btn-outline-dark img-fluid" style="width: 16rem">Comprar</button>
+      </div>
+    </div>
+    <div class="col mb-3">
+      <div class="UmaBorda">
+        <img src="/assets/img/{{livro.imagemURL}}" class="card-img-top img-fluid img-thumbnail" alt="" type="button" (click)="livroSelect(livro, template)">
+        <button type="button" class="btn btn-outline-dark img-fluid" style="width: 16rem" (click)="livroSelect(livro, template)">Detalhes</button>
+        <button type="button" class="btn btn-outline-dark img-fluid" style="width: 16rem">Comprar</button>
+      </div>
+    </div>
+    </div>
+
+  </div>
+</div>
+
+<br>
+
+
+<ng-template #template>
+  <div class="modal-content" style="background-color: #111;">
+  <div class="modal-header animate__animated animate__backInLeft" >
+
+    <div *ngIf="livroSelecionado.id !== 0" class="col-10">
+
+      <app-titulo [titulo]="(livroSelecionado.id === -1 ? 'Novo Autor' : 'Detalhes: ')">
+
+      </app-titulo>
+
+    </div>
+
+  </div>
+  <div class="modal-body animate__animated animate__backInLeft" >
+
+    <div class="row">
+
+      <div class="animate__animated animate__backInLeft">
+        <form [formGroup]="livroForm">
+
+          <div class="row">
+            <div class="form-group col-md-12">
+              <label>Nome</label>
+              <input type="text" class="form-control" formControlName="nome" readonly>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-md-3">
+              <label>Edição</label>
+              <input type="text" class="form-control" formControlName="edicao" readonly>
+            </div>
+
+            <div class="form-group col-md-3">
+              <label>Páginas</label>
+              <input type="text" class="form-control" formControlName="pagina" readonly>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label>Tipo de Capa</label>
+              <input type="text" class="form-control" formControlName="tipoCapa" readonly>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-md-4">
+              <label>Gênero</label>
+              <select readonly="readonly" class="form-control" formControlName="generoId">
+                <option *ngFor="let genero of generos" [value]="genero.id">
+                  {{genero.descricao}}
+                </option>
+              </select>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label>Segmento</label>
+              <select readonly="readonly" class="form-control" formControlName="segmentoId">
+                <option *ngFor="let segmento of segmentos" [value]="segmento.id">
+                  {{segmento.descricao}}
+                </option>
+              </select>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label>Editora</label>
+              <select readonly="readonly" class="form-control" formControlName="marcaId">
+                <option *ngFor="let marca of marcas" [value]="marca.id">
+                  {{marca.descricao}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="form-group">
+              <label>Autor</label>
+              <select readonly="readonly" class="form-control" formControlName="autorId">
+                <option *ngFor="let autor of autores" [value]="autor.id">
+                  {{autor.nome}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label>Classificação</label>
+              <select readonly="readonly" class="form-control" formControlName="classificacaoId">
+                <option *ngFor="let classificacao of classificacoes" [value]="classificacao.id">
+                  {{classificacao.descricao}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label>Data de Publicação</label>
+              <input type="datetime" class="form-control" formControlName="dataPublicacao" readonly>
+            </div>
+          </div>
+
+          <br>
+
+        </form>
+
+        <br>
+
+    </div>
+
+  </div>
+
+  </div>
+  <div class="modal-footer animate__animated animate__backInLeft" >
+    <button style="color: goldenrod;" type="button" class="btn btn-outline-dark  pull-right" aria-label="Close" (click)="modalRef.hide()">
+      Fechar
+    </button>
+  </div>
+</div>
+</ng-template>

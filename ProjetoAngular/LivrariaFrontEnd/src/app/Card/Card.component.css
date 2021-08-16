@@ -1,0 +1,67 @@
+h1{
+    color: goldenrod;
+    font-size: 3em;
+    text-align: center;
+}
+
+img{
+    height: 300px;
+    width: 254px;
+}
+
+.UmaBorda{
+    border: 5px solid goldenrod;
+    border-radius: 3px;
+    padding: 10px;
+}
+
+
+.legal{
+    border: 5px solid goldenrod;
+    align-items: center;
+    text-align: center;
+    border-radius: 10px;
+    height: auto;
+    padding: 20px;
+}
+
+button{
+    color: goldenrod;
+}
+
+hr{
+    border: 2px solid goldenrod;
+}
+
+pagination-controls{
+    color: goldenrod;
+}
+
+.table{
+  --bs-table-accent-bg: #111;
+
+}
+tr{
+  background-color: #fff;
+  color: goldenrod;
+}
+
+
+
+.modal-content{
+  background-color: #000;
+  min-width: 60%;
+
+}
+
+
+label{
+  color: goldenrod;
+}
+
+select[readonly] {
+  background: #eee; /*Simular campo inativo - Sugestão @GabrielRodrigues*/
+  pointer-events: none;
+  touch-action: none;
+}
+

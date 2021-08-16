@@ -1,0 +1,151 @@
+<h1 class="title animate__animated animate__zoomIn">Lançamentos</h1>
+<br><br>
+
+<div class="container animate__animated animate__zoomIn center">
+
+  <div id="carouselExampleInterval" class="carousel slide img-fluid " data-bs-ride="carousel">
+    <div class="carousel-inner  center" >
+      <div class="carousel-item active img-fluid"  data-bs-interval="4000">
+        <img src="assets/img/aRainhaVermelha.jpg" class="w-auto" style="margin: auto; cursor: pointer;"   alt="...">
+      </div>
+      <div class="carousel-item img-fluid" data-bs-interval="4000">
+        <img src="assets/img/oIluminado.jpg" class="w-auto" style="cursor: pointer;"  alt="...">
+      </div>
+      <div class="carousel-item img-fluid" data-bs-interval="4000">
+        <img src="assets/img/osMiseraveis.jpg" class="w-auto" style="cursor: pointer;"   alt="...">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
+
+<br>
+
+
+<ng-template #template>
+  <div class="modal-content" style="background-color: #111;">
+  <div class="modal-header animate__animated animate__backInLeft" >
+
+    <div *ngIf="livroSelecionado.id !== 0" class="col-10">
+
+      <app-titulo [titulo]="(livroSelecionado.id === -1 ? 'Novo Autor' : 'Detalhes: ')">
+      </app-titulo>
+
+    </div>
+
+  </div>
+  <div class="modal-body animate__animated animate__backInLeft" >
+
+    <div class="row">
+
+      <div class="animate__animated animate__backInLeft">
+        <form [formGroup]="livroForm">
+
+          <div class="row">
+            <div class="form-group col-md-12">
+              <label>Nome</label>
+              <input type="text" class="form-control" formControlName="nome" readonly>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-md-3">
+              <label>Edição</label>
+              <input type="text" class="form-control" formControlName="edicao" readonly>
+            </div>
+
+            <div class="form-group col-md-3">
+              <label>Páginas</label>
+              <input type="text" class="form-control" formControlName="pagina" readonly>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label>Tipo de Capa</label>
+              <input type="text" class="form-control" formControlName="tipoCapa" readonly>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-md-4">
+              <label>Gênero</label>
+              <select readonly="readonly" class="form-control" formControlName="generoId">
+                <option *ngFor="let genero of generos" [value]="genero.id">
+                  {{genero.descricao}}
+                </option>
+              </select>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label>Segmento</label>
+              <select readonly="readonly" class="form-control" formControlName="segmentoId">
+                <option *ngFor="let segmento of segmentos" [value]="segmento.id">
+                  {{segmento.descricao}}
+                </option>
+              </select>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label>Editora</label>
+              <select readonly="readonly" class="form-control" formControlName="marcaId">
+                <option *ngFor="let marca of marcas" [value]="marca.id">
+                  {{marca.descricao}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="form-group">
+              <label>Autor</label>
+              <select readonly="readonly" class="form-control" formControlName="autorId">
+                <option *ngFor="let autor of autores" [value]="autor.id">
+                  {{autor.nome}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label>Classificação</label>
+              <select readonly="readonly" class="form-control" formControlName="classificacaoId">
+                <option *ngFor="let classificacao of classificacoes" [value]="classificacao.id">
+                  {{classificacao.descricao}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label>Data de Publicação</label>
+              <input type="datetime" class="form-control" formControlName="dataPublicacao" readonly>
+            </div>
+          </div>
+
+          <br>
+
+        </form>
+
+        <br>
+
+    </div>
+
+  </div>
+
+  </div>
+  <div class="modal-footer animate__animated animate__backInLeft" >
+    <button style="color: goldenrod;" type="button" class="btn btn-outline-dark  pull-right" aria-label="Close" (click)="modalRef.hide()">
+      Fechar
+    </button>
+  </div>
+</div>
+</ng-template>

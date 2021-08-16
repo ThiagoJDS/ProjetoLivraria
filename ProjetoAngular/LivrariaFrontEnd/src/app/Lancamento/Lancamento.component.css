@@ -1,0 +1,20 @@
+h1{
+    color:goldenrod;
+    font-size: 3em;
+    text-align: center;
+}
+
+img{
+    height: 300px;
+    padding-left: 40%;
+}
+
+th {
+    font-size: 2em;
+    text-align: center;
+}
+
+.carousel {
+
+    align-items: center;
+}
